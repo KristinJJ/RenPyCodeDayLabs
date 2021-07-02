@@ -28,6 +28,8 @@ label start:
 
     e "Once you add a story, pictures, and music, you can release it to the world!"
 
+    e "Change that will be pushed using the terminal that is outside of Atom."
+
     # This ends the game.
 
     return
