@@ -13,8 +13,7 @@ label start:
     $ MC = renpy.input("choose a name for the player")
     $ MC = MC.strip()
 
-    scene bg room
-    show picture
+    
 
     play sound "<from 0.0 to 4>alarm-sound.wav"
 
