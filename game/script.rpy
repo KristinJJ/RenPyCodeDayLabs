@@ -1,10 +1,11 @@
 
 # Player chooses his/her own name.
-define MC = Character("[player_name]", color="#c8ffc8")
-define reg = Character("Registration Lady", color = "#c4ffc4")
-define s = Character("Scarlet",color = "#E9967A")
-define r = Character("Ria", color = "#c1ffc1")
-define t = Character("Host", color = "008080")
+define MC = Character("[player_name]", color="#e88a73")
+define reg = Character("Registration Lady", color = "#f3c452")
+define s = Character("Scarlet",color = "#f3c1f1")
+define r = Character("Ria", color = "#9a5c24")
+define t = Character("Host", color = "#2b69cd")
+define v = Character("Vienna",color = "#5155a1")
 define fade = Fade(0.5, 0.0, 0.5)
 
 
