@@ -1,10 +1,12 @@
 
 # Player chooses his/her own name.
 define MC = Character("[player_name]", color="#e88a73")
-define reg = Character("Registration Lady", color = "#c4ffc4")
-define s = Character("Scarlet",color = "#E9967A")
-define r = Character("Ria", color = "#c1ffc1")
-define h = Character("Host", color = "008080")
+define reg = Character("Registration Lady", color = "#f3c452")
+define s = Character("Scarlet",color = "#f3c1f1")
+define r = Character("Ria", color = "#9a5c24")
+define h = Character("Host", color = "#2b69cd")
+define v = Character("Vienna",color = "#5155a1")
+
 define fade = Fade(0.5, 0.0, 0.5)
 
 
@@ -148,7 +150,7 @@ label start:
 
     scene background
 
-    show vienna neutral at center:
+    show host neutral at center:
         xpos 0.5
     show scarlet neutral at left
     show ria neutral at right
@@ -217,8 +219,7 @@ label start:
 
 label left_path:
 
-    show mc neutral:
-        xpos 0.85
+    show mc neutral at right
 
     MC "Good idea. Let’s go to the left."
 
@@ -229,10 +230,11 @@ label left_path:
     students hoping to take each other out."
 
     "Before long, you burst into a clearing in the forest full of students
-    fighting each other. You hesitate- getting into a fight with the other
-    students would be unnecessary and time consuming, but turning around and
-    finding a different path through the forest would be worse. You turn to ask
-    Ria her opinion, but to your surprise she is smiling."
+    fighting each other. You hesitate - getting into a fight with the other
+    students would be unnecessary and time consuming."
+
+    "Turning around and finding a different path through the forest would be
+    worse. You turn to ask Ria her opinion, but to your surprise she is smiling."
 
 
     show ria grinning at left with moveinleft
@@ -269,8 +271,6 @@ label left_path:
 
     scene forest trees background with dissolve
 
-    show mc neutral at center
-
     "You walk cautiously through the trees, pushing branches out of the way and
     listening carefully for other students. The forest echoes with the yells
     and crashes from students fighting and occasional growls from what sounds
@@ -282,18 +282,29 @@ label left_path:
     group of giant forest monsters swarming through the trees and undergrowth,
     headed straight for you."
 
+    show mc neutral at center:
+        xalign 0.5
+        linear 0.6 xpos 0.29
+
     show monster grp at right with dissolve
+    pause 1.0
 
     MC "We have to run for it! The second arena is right ahead!"
 
     "Zigzagging between trees, you both sprint for the end of the forest,
     the hiss and growl of the monsters getting closer with every step."
 
+    show mc neutral at center:
+        xalign 0.5
+        linear 0.6 xpos 0.85
+
     show monster purple at left
 
     "You glance back and feel an unpleasant jolt of adrenaline seeing a purple
     forest monster only 10 feet behind, close enough to see its forked tongue
-    and the mushrooms on its back. Turning around just in time to swerve around
+    and the mushrooms on its back."
+
+    "Turning around just in time to swerve around
     a tree and jump over a small creek, you barrel out of the forest, the dirt
     ground abruptly becoming pavement."
 
@@ -309,9 +320,9 @@ label left_path:
     The monsters stop, then turn and disappear back into the trees.
     Ria grins, and you both laugh triumphantly."
 
-    show mc grinning at center
+    show mc smirk at center
 
-    show ria grinning at center
+    show ria grinning at left
 
     MC "First arena down, only one left to go!"
 
@@ -341,10 +352,10 @@ label right_path:
     "You lead the way, following the less crowded pathway to the right.
     Already yells of students and the growls of some sort of animal echoes
     through the forest, and occasional flashes of light from the left from
-    students fighting using their powers. Ria and you walk for a while without
-    seeing any other students or animals."
+    students fighting using their powers."
 
-    "Suddenly Ria stops and throws out her arm to stop you. You follow her gaze
+    "Ria and you walk for a while without seeing any other students or animals.
+    Suddenly Ria stops and throws out her arm to stop you. You follow her gaze
     to see a group of 3 giant forest monsters foraging for food around about
     30 feet along the path."
 
@@ -430,12 +441,61 @@ label second_track:
     MC "You’re right. Let’s go around the monsters and try to stay quiet.
     They’ll probably head towards the other groups that are fighting."
 
-    
+    "Ria nods. Motioning to keep quiet, she moves forward, careful to keep to
+    the shadows underneath the trees and keep her footsteps quiet. You follow
+    her closely, keeping an eye on the forest monsters."
 
+    "Suddenly, loud bangs and flashes of colored light explode in the sky over
+    the left side of the forest, indicating the start of a fight between
+    students. The giant forest monsters look up at the noise, and you freeze
+    in place. The monsters begin to move towards the left, attracted by the
+    noise and light."
+
+    "Ria takes the initiative to move forward, cautiously at first, and then
+    faster once we realize the monsters have moved far away."
+
+    hide monster grp
+
+    "I look up and realize the trees are beginning to thin out."
+
+    show ria happy at left
+
+    "We run forward and finally exit the forest. I turn around, disoriented by
+    the sudden lack of trees surrounding me. Ria gasps, and I turn to face the
+    second arena."
+
+    jump second_arena
 
     return
 
 label second_arena:
+
+    scene field dragons
+
+    show ria surprised at left
+    show mc surprised at right
+
+    "The end of the forest opens onto a wide, flat Gladiator-like arena the
+    size of a Quidditch field, with a gigantic dragon at the very end, its tail
+    curled around the dragon orb."
+
+    r "woah..."
+
+    MC "A dragon is the obstacle this year? I really can’t believe it…"
+
+    show ria sad at left
+
+    r "Is this even legal? How is anyone supposed to get past the dragon?"
+
+    " You hesitate and scan the arena. A few tournament goers have already
+    begun fighting amongst themselves in the arena, but none seem to have made
+    it as far as attempting to fight the dragon."
+
+
+
+
+
+
 
 
     return
