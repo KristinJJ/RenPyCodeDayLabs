@@ -107,8 +107,11 @@ label start:
     Magical Studies, this is the last chance to win the tournament prize we
     both dearly want: the wish-granting dragon's orb."
 
+    init:
+        transform flip:
+            xzoom -1.0
 
-    show scarlet smirk at left
+    show scarlet smirk at flip
 
     s "You're entering? As if you'll have a chance with you know…"
 
@@ -286,7 +289,8 @@ label left_path:
         xalign 0.5
         linear 0.6 xpos 0.29
 
-    show monster grp at right with dissolve
+    show monster grp at right with dissolve:
+
     pause 1.0
 
     MC "We have to run for it! The second arena is right ahead!"
