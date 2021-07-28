@@ -1,0 +1,22 @@
+﻿I'm sorry, but an uncaught exception occurred.
+
+While running game code:
+Exception: Module tl/None/common could not be loaded.
+
+-- Full Traceback ------------------------------------------------------------
+
+Full traceback:
+  File "/Users/bird/Desktop/renpy/renpy-7.4.6-sdk/renpy/bootstrap.py", line 326, in bootstrap
+    renpy.main.main()
+  File "/Users/bird/Desktop/renpy/renpy-7.4.6-sdk/renpy/main.py", line 416, in main
+    renpy.exports.load_module("tl/None/common")
+  File "/Users/bird/Desktop/renpy/renpy-7.4.6-sdk/renpy/exports.py", line 2657, in load_module
+    initcode = renpy.game.script.load_module(name)
+  File "/Users/bird/Desktop/renpy/renpy-7.4.6-sdk/renpy/script.py", line 300, in load_module
+    raise Exception("Module %s could not be loaded." % name)
+Exception: Module tl/None/common could not be loaded.
+
+Darwin-18.7.0-x86_64-i386-64bit
+Ren'Py 7.4.6.1693
+ 
+Wed Jul 14 14:33:01 2021
