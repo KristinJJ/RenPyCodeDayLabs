@@ -31,15 +31,15 @@ label start:
 
     # ACT 1
     "Today is the day of {b} Cherry Apple Academy Annual Tounament {/b}.
-    To some students it’s nothing more than a fun adventure,with a chance for a
-    big prize. But for you, it’s the chance for a wish that could change your life."
+    To some students it’s nothing more than a adventure, with a chance for a
+    prize. But for you, it’s the chance for a wish that could change your life."
 
     scene bg entrance
     with fade
 
     stop sound
 
-    play music "music.mp3"
+    play music "music.mp3" volume 0.67
 
     show reg neutral at left
     pause
@@ -89,9 +89,14 @@ label start:
     hide reg neutral
     pause
 
+    init:
+        transform flip:
+            xzoom -1.0
 
 
-    show scarlet neutral at left with moveinleft
+    show scarlet neutral at flip with moveinleft:
+        yalign 0.5
+        linear 0.6 ypos 0.65
     show mc angry at center with moveinbottom
 
     show ria neutral at right with moveinright
@@ -104,9 +109,6 @@ label start:
     Magical Studies, this is the last chance to win the tournament prize you
     both dearly want: the wish-granting dragon's orb."
 
-    init:
-        transform flip:
-            xzoom -1.0
 
     show scarlet smirk at flip
 
@@ -197,7 +199,7 @@ label start:
     h "START! REMEMBER- THE FIRST TO GET THROUGH THE TWO ARENAS AND FIND THE
     DRAGON ORB WINS THE PRIZES! MAY THE STRONGEST STUDENT PREVAIL!"
 
-    stop music
+    stop music fadeout 1.0
 
 
     # End of Act 1.
@@ -205,6 +207,8 @@ label start:
     # Act 2
 
     scene bg forest with dissolve
+
+    play sound "forest.mp3" volume 0.5
 
     " As soon as the gates open, the crowd of participants rush forward with
     a roar. By the time you pass through the gates into the forest, the other
@@ -621,9 +625,14 @@ label second_arena:
     "Watching her fight the dragon, you are suddenly remember when Scarlet
     used to be your closest friend."
 
-    scene bg flashback with fade
+    scene bg flashback1 with fade
 
-    show mc child at left with moveinbottom
+    init:
+        transform flip:
+            xzoom -1.0
+
+
+    show mc child at flip with moveinbottom
     show scarlet child at right with moveinbottom
 
     s "MC! Let’s play ‘Defeat the Dragon’ together today!"
@@ -634,15 +643,15 @@ label second_arena:
 
     MC "Of course!"
 
-    scene field dragons with fade
+    scene bg arena with fade
 
     show scarlet angry at left with easeinleft
     show dragon angry at right with easeinright:
         yalign 0.5
-        linear 0.6 ypos 0.65
+        linear 0.6 ypos 0.56
     show mc angry at center with easeinbottom:
         xalign 0.5
-        linear 0.6 xpos 0.29
+        linear 0.6 xpos 0.39
 
 
     "Suddenly, you find yourself running full speed towards Scarlet.
@@ -743,6 +752,8 @@ label happy_ending:
 
     scene bg dragon orb
     show mc surprised at left with easeinleft
+
+    play music "music.mp3"
 
     "You slow down as you reach the front of the dais. You see the dragon orb,
     floating gently above the dais."
@@ -860,7 +871,9 @@ label uncertain_ending:
 
 label sad_ending:
 
+
     scene bg dragon orb
+
     show mc surprised at left with easeinleft
 
     "You slow down as you reach the front of the dais. You see the dragon orb,
@@ -905,7 +918,9 @@ label sad_ending:
 
     "You stare at Scarlet as she turns and walks away. For possibly the first
     time ever, Scarlet is right. Even if the dragon orb doesn’t work, you don’t
-    need the wish or any powers. You won the tournament without powers, though
+    need the wish or any powers."
+
+    "You won the tournament without powers, though
     admittedly with the help of Ria."
 
     "As if on cue, you hear Ria call your name."
