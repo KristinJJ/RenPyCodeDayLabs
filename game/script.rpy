@@ -208,7 +208,7 @@ label start:
 
     scene bg forest with dissolve
 
-    play sound "forest.mp3" volume 0.5
+    play music "forest.mp3" volume 0.5
 
     " As soon as the gates open, the crowd of participants rush forward with
     a roar. By the time you pass through the gates into the forest, the other
@@ -343,6 +343,8 @@ label different_path:
 
     MC "We have to run for it! The second arena is right ahead!"
 
+
+
     "Zigzagging between trees, you both sprint for the end of the forest,
     the hiss and growl of the monsters getting closer with every step."
 
@@ -463,8 +465,11 @@ label right_path:
 
 label first_track:
 
+
+
     MC "I don’t want to lose a lot of time here though. Let’s run past and
     if they give chase, we’ll defend ourselves."
+
 
     "Ria nods, and starts to create a shield for herself. You pull an
     extendable staff off of your weapons belt. With a flick, it extends to the
@@ -474,7 +479,6 @@ label first_track:
     MC "one..."
     MC "two..."
     MC "three..."
-
 
     hide ria angry at left
 
@@ -508,6 +512,8 @@ label first_track:
 
     show ria tired at left with moveinleft
 
+
+
     "Ria suddenly bursts out of the forest, running at full speed.
     She looks slightly worse for wear; her shield has already disappeared,
     and her uniform sleeve has a long tear in it."
@@ -515,6 +521,7 @@ label first_track:
     show mc happy at center
 
     MC "We made it! We’re in the second arena!"
+
 
     jump second_arena
 
@@ -559,6 +566,8 @@ label second_track:
 label second_arena:
 
     scene bg arena with dissolve
+
+    play music "second_arena.mp3" volume 0.45
 
     init:
         transform flip:
@@ -765,6 +774,27 @@ label second_arena:
 
     r "MC, leave me, I’ll be fine. Go catch up to Scarlet. You have to get the orb first."
 
+    "You hesitate. It would be poor repayment for Ria's injury to lose the tournament."
+
+    MC "I'll win for us, I promise!"
+
+    hide ria hurt with moveoutbottom
+
+    "You run after Scarlet, knowing your only chance to win the tournament is
+    if you can reach the dragon orb before her. Just as you spot her running in
+    front of you, suddenly she collapses."
+
+    show scarlet angry at left with moveinbottom
+
+    "You catch up to her quickly, and realize Scarlet must have collapsed from
+    an injury."
+
+    "Not wanting to waste any more time fighting, you ignore Scarlet
+    and run past her, finally reaching the raised dais at the end with the dragon
+    orb."
+
+    stop music fadeout 1.0
+
 
 
     if count >= 3:
@@ -779,7 +809,7 @@ label second_arena:
 label happy_ending:
 
 
-    scene bg dragon orb
+    scene bg dais
     show mc surprised at left with easeinleft
 
     play music "music.mp3"
@@ -831,13 +861,18 @@ label happy_ending:
 
     "Finally, your life has begun."
 
+    jump credits
+
+    stop music fadeout 1.0
+
     return
 
 
 label uncertain_ending:
 
-    scene bg dragon orb
+    scene bg dais
     show mc surprised at left with easeinleft
+    play music "uncertain-music.mp3" volume 0.56
 
     "You slow down as you reach the front of the dais. You see the dragon orb,
     floating gently above the dais."
@@ -895,13 +930,19 @@ label uncertain_ending:
     with Scarlet. Somehow, though, you feel as though you failed the friend
     you already had."
 
+    jump credits
+
+    stop music fadeout 1.0
+
     return
 
 
 label sad_ending:
 
 
-    scene bg dragon orb
+    scene bg dais
+
+    play music "sad_ending.mp3" volume 0.45
 
     show mc surprised at left with easeinleft
 
@@ -1000,5 +1041,16 @@ label sad_ending:
 
     MC "The respect of the whole school, huh? That’s a good enough prize for
     me."
+
+    jump credits
+
+    stop music fadeout 1.0
+
+    return
+
+label credits:
+    scene bg credits with fade
+    play music "title_and_credits_music.mp3" volume 0.5
+    pause 10
 
     return
