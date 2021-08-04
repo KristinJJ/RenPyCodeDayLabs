@@ -9,6 +9,8 @@ define v = Character("Vienna",color = "#5155a1")
 
 define fade = Fade(0.5, 0.0, 0.5)
 
+default count = 0
+
 
 
 # The game starts here.
@@ -29,15 +31,15 @@ label start:
 
     # ACT 1
     "Today is the day of {b} Cherry Apple Academy Annual Tounament {/b}.
-    To some students it’s nothing more than a fun adventure,with a chance for a
-    big prize. But for you, it’s the chance for a wish that could change your life."
+    To some students it’s nothing more than a adventure, with a chance for a
+    prize. But for you, it’s the chance for a wish that could change your life."
 
     scene bg entrance
     with fade
 
     stop sound
 
-    play music "music.mp3"
+    play music "music.mp3" volume 0.67
 
     show reg neutral at left
     pause
@@ -87,9 +89,14 @@ label start:
     hide reg neutral
     pause
 
+    init:
+        transform flip:
+            xzoom -1.0
 
 
-    show scarlet neutral at left with moveinleft
+    show scarlet neutral at flip with moveinleft:
+        yalign 0.5
+        linear 0.6 ypos 0.65
     show mc angry at center with moveinbottom
 
     show ria neutral at right with moveinright
@@ -102,9 +109,6 @@ label start:
     Magical Studies, this is the last chance to win the tournament prize you
     both dearly want: the wish-granting dragon's orb."
 
-    init:
-        transform flip:
-            xzoom -1.0
 
     show scarlet smirk at flip
 
@@ -121,8 +125,10 @@ label start:
     show mc sad at center
 
     "You sigh internally. It’s hard to imagine that the pink-haired demon in front of you had
-    once been your best friend. Everything in your life changed once everyone
-    realized you had no powers, including my friendship with Scarlet."
+    once been your best friend."
+
+    "Everything in your life changed once everyone realized you had no powers,
+    including my friendship with Scarlet."
 
     "But now, you have the chance to change your life with the tournament prize,
     and she is not going to get in your way."
@@ -146,7 +152,11 @@ label start:
     pause
     "Suddenly, a loud, magnified voice echoes across the clearing."
 
-    scene background
+    stop music fadeout 1.0
+
+    scene bg spotlight with fade
+
+    play music "arena.wav" volume 0.05
 
     show host neutral at center:
         xpos 0.5
@@ -161,13 +171,16 @@ label start:
 
     "Yells of assent from the large crowd of participants rise in response."
 
-    h "THEN PREPARE YOURSELF! THE TOURNAMENT WILL START IN 3…"
+    h "THEN PREPARE YOURSELF! THE TOURNAMENT WILL START IN "
+
+    play sound "<from 0.0 to 1>countdown.mp3" volume 0.75
+    h "3..."
 
     "Scarlet sneers at you once more before pushing her way to the front of the
     crowd of tournament participants."
 
     hide scarlet with moveoutleft
-
+    play sound "<from 1 to 2>countdown.mp3" volume 0.75
     h "2..."
 
     r "Let’s win this!"
@@ -176,6 +189,7 @@ label start:
 
     hide ria with moveoutright
 
+    play sound "<from 2 to 3>countdown.mp3" volume 0.75
     h "1..."
 
     "You imagine yourself lifting up the dragon orb at the end of the
@@ -185,12 +199,16 @@ label start:
     h "START! REMEMBER- THE FIRST TO GET THROUGH THE TWO ARENAS AND FIND THE
     DRAGON ORB WINS THE PRIZES! MAY THE STRONGEST STUDENT PREVAIL!"
 
+    stop music fadeout 1.0
+
 
     # End of Act 1.
 
     # Act 2
 
-    scene forest background
+    scene bg forest with dissolve
+
+    play sound "forest.mp3" volume 0.5
 
     " As soon as the gates open, the crowd of participants rush forward with
     a roar. By the time you pass through the gates into the forest, the other
@@ -208,13 +226,17 @@ label start:
     menu:
         "Take Ria’s advice and go left towards the crowded area - it might be safer.":
             jump left_path
+            $ count += 1
 
         "Avoid the other participants as much as possible and go right.":
             jump right_path
+            $ count += 1
 
     # This ends the game.
 
     return
+
+
 
 label left_path:
 
@@ -235,14 +257,31 @@ label left_path:
     "Turning around and finding a different path through the forest would be
     worse. You turn to ask Ria her opinion, but to your surprise she is smiling."
 
+    init:
+        transform flip:
+            xzoom -1.0
 
-    show ria grinning at left with moveinleft
+
+    show ria grinning at flip with moveinleft:
+        yalign 0.5
+        linear 0.6 ypos 0.65
 
     r "Don’t worry, MC. I’ll get us through this."
 
     "You suddenly remember Ria’s power: shielding. Useless for the more
     academic subjects at Cherry Apple Academy, but really helpful when it comes
     to the physical challenges, even though it drains Ria’s energy quickly."
+
+    menu:
+        "Let Ria protect you both":
+            jump ria_handles_it
+
+        "Find a different path in the forest to avoid conflict":
+            jump different_path
+            $ count += 1
+
+
+label ria_handles_it:
 
     MC "Thanks, Ria. I’ll leave it to you, then."
 
@@ -270,20 +309,25 @@ label left_path:
 
     hide ria happy with moveoutleft
 
-    scene forest trees background with dissolve
+    jump different_path
+
+    return
+
+label different_path:
+
+
+    scene bg clearing with dissolve
 
     "You walk cautiously through the trees, pushing branches out of the way and
     listening carefully for other students."
 
-    "The forest echoes with the yells
-    and crashes from students fighting and occasional growls from what sounds
-    like giant forest monsters, which you’ve never seen except in the Dangerous
-    Magical Creatures textbook."
+    "The forest echoes with the yells from students fighting and
+    occasional growls from what sounds like giant monsters,
+    which you’ve never seen except in the Dangerous Magical Creatures textbook."
 
     "The trees begin to thin out, and eventually you spot the end of the forest
     ahead. Suddenly Ria whips her head around, and you follow her gaze to see a
-    group of forest monsters swarming through the trees and
-    heading towards you."
+    group of forest monsters heading towards you."
 
     show mc neutral at center:
         xalign 0.5
@@ -322,7 +366,7 @@ label left_path:
     pause
 
     hide monstor grp with moveoutbottom
-    pause
+
 
     show ria angry at left with moveinleft
 
@@ -353,28 +397,49 @@ label right_path:
 
     r "Ok. Let’s go."
 
-    "You lead the way, following the less crowded pathway to the right.
-    Already yells of students and the growls of some sort of animal echoes
-    through the forest, and occasional flashes of light from the left from
-    students fighting using their powers. Ria and you walk for a while without
-    seeing any other students or animals."
+    "You lead the way, following the less crowded pathway to the right."
 
-    "You lead the way, following the less crowded pathway to the right.
-    Already yells of students and the growls of some sort of animal echoes
+    "Already yells of students and the growls of some sort of animal echoes
     through the forest, and occasional flashes of light from the left from
     students fighting using their powers."
 
+    "Ria and you walk for a while without seeing any other students or animals."
+
+    "The forest gradually darkens as the trees become more crowded, blocking
+    light. You begin to trip on roots and vines on the forest ground."
+
+    r "It's hard to see where we're going... should we use a flare for more light?"
+
+    menu:
+        "Light a flare":
+            MC "Yeah, let's light one."
+            "Ria lights one and you walk on, taking care not to trip again."
+
+        "Don't light a flare":
+            MC "A flare might attract monsters, so let's not."
+            "Ria nods."
+            $ count += 1
+
+
     "Ria and you walk for a while without seeing any other students or animals.
-    Suddenly Ria stops and throws out her arm to stop you. You follow her gaze
+    Suddenly Ria stops and throws out her arm to stop you."
+
+    "You follow her gaze
     to see a group of 3 giant forest monsters foraging for food around about
     30 feet along the path."
+    show mc neutral at center:
+        xalign 0.5
+        linear 0.6 xpos 0.38
+
 
     show monster grp at right with moveinright:
         yalign 0.5
-        linear 0.6 ypos 0.5
+        linear 0.6 ypos 0.58
 
     "You recognize them from your Dangerous Magical Creatures textbook
-    by their forked tongue and the mushrooms growing on the back. You remember
+    by their forked tongue and the mushrooms growing on the back."
+
+    "You remember
     that forest monsters can be extremely aggressive and dangerous when they
     spot a possible threat."
 
@@ -391,6 +456,7 @@ label right_path:
 
         "Try to sneak around and lose time.":
             jump second_track
+            $ count += 1
 
     return
 
@@ -414,13 +480,17 @@ label first_track:
 
     "You sprint forward, seeing out of the corner of your eye Ria doing the
     same. The forest monsters hiss, hearing your approach, and begin swarming
-    towards you. A large green one crawls towards you and you bring your staff
+    towards you."
+
+    "A large green one crawls towards you and you bring your staff
     down on its head, then sprint away as it recovers."
 
     hide monstergrp with moveoutbottom
-    pause
 
-    show monster blue at right with moveinright
+    show monster blue at right with moveinright:
+        yalign 0.5
+        linear 0.6 ypos 0.65
+
     pause
 
     "Another blue monster attempts to fight, but you duck away.
@@ -428,7 +498,9 @@ label first_track:
     roll away and jump to your feet, stumbling away."
 
     "Suddenly, the dirt ground beneath you becomes pavement, and you look
-    around, disoriented. You realize that you have exited the forest, and now
+    around, disoriented."
+
+    "You realize that you have exited the forest, and now
     stand in what must be the second arena. The blue monster prowls close,
     hissing, and then turns away and disappears into the trees."
 
@@ -459,7 +531,9 @@ label second_track:
 
     "Suddenly, loud bangs and flashes of colored light explode in the sky over
     the left side of the forest, indicating the start of a fight between
-    students. The giant forest monsters look up at the noise, and you freeze
+    students."
+
+    "The giant forest monsters look up at the noise, and you freeze
     in place. The monsters begin to move towards the left, attracted by the
     noise and light."
 
@@ -476,15 +550,24 @@ label second_track:
     the sudden lack of trees surrounding me. Ria gasps, and you turn to face the
     second arena."
 
+    stop music fadeout 1.0
+
     jump second_arena
 
     return
 
 label second_arena:
 
-    scene field dragons
+    scene bg arena with dissolve
 
-    show ria surprised at left
+    init:
+        transform flip:
+            xzoom -1.0
+
+    show ria surprised at flip with moveinleft:
+        yalign 0.5
+        linear 0.6 ypos 0.65
+
     show mc surprised at right
 
     "The end of the forest opens onto a wide, flat Gladiator-like arena the
@@ -495,7 +578,9 @@ label second_arena:
 
     MC "A dragon is the obstacle this year? I really can’t believe it…"
 
-    show ria sad at left
+    show ria sad at flip:
+        yalign 0.5
+        linear 0.6 ypos 0.65
 
 
     r "Is this even legal? How is anyone supposed to get past the dragon?"
@@ -505,8 +590,9 @@ label second_arena:
     it as far as attempting to fight the dragon."
 
     menu:
-        "I don’t know… we just have to find a way.":
+        " Let’s think of a plan first.":
             show ria neutral at left
+            $ count += 1
             pause
             r "You’re right. I think I have an idea. As long as we get to the
             dragon first, I can probably lure the dragon away and use my shield
@@ -514,7 +600,8 @@ label second_arena:
 
 
 
-        "We can and we will. Let’s think of a plan first.":
+
+        " I don’t know… ":
             show ria neutral at left
             pause
             r "You’re right. I think I have an idea. As long as we get to the
@@ -547,7 +634,9 @@ label second_arena:
 
     hide mc surprised with moveoutright
 
-    show dragon angry at right with easeinright
+    show dragon angry at right with easeinright:
+        yalign 0.5
+        linear 0.6 ypos 0.5
 
     "You freeze in indecision. On one hand, you don’t want to fight either the
     dragon or Scarlet, and you don’t want to throw away your plan with Ria."
@@ -558,9 +647,17 @@ label second_arena:
     "Watching her fight the dragon, you are suddenly remember when Scarlet
     used to be your closest friend."
 
-    scene bg flashback with fade
+    scene bg flashback1 with fade
 
-    show mc child at left with moveinbottom
+    init:
+        transform flip:
+            xzoom -1.0
+
+
+    show mc child at flip with moveinbottom:
+        yalign 0.5
+        linear 0.6 ypos 0.65
+
     show scarlet child at right with moveinbottom
 
     s "MC! Let’s play ‘Defeat the Dragon’ together today!"
@@ -571,11 +668,18 @@ label second_arena:
 
     MC "Of course!"
 
-    scene field dragons with fade
+    scene bg arena with fade
 
-    show scarlet angry at left with easeinleft
-    show dragon angry at right with easeinright
-    show mc angry at center with easeinbottom
+    show scarlet angry at flip with easeinleft:
+        yalign 0.5
+        linear 0.6 ypos 0.65
+    show dragon angry at right with easeinright:
+        yalign 0.5
+        linear 0.6 ypos 0.56
+    show mc angry at center with easeinbottom:
+        xalign 0.5
+        linear 0.6 xpos 0.39
+
 
     "Suddenly, you find yourself running full speed towards Scarlet.
     You vaguely hear Ria yell something after you but you can’t make it out
@@ -661,75 +765,29 @@ label second_arena:
 
     r "MC, leave me, I’ll be fine. Go catch up to Scarlet. You have to get the orb first."
 
-    menu:
-        "Catch up to Scarlet and leave Ria behind":
-            MC "I’m sorry. I’ll win for us, I promise."
-            jump catch_up_to_scarlet
-
-        "Help Ria, and let Scarlet get ahead":
-            MC "MC: Scarlet can wait. You need help right now."
-            jump Help_Ria
 
 
-
-
+    if count >= 3:
+        jump happy_ending
+    elif count >= 2:
+        jump uncertain_ending
+    else:
+        jump sad_ending
 
     return
 
-label catch_up_to_scarlet:
+label happy_ending:
 
-    "You run after Scarlet, ignoring your guilt and pain as you leave
-    Ria with the dragon."
-
-    hide ria hurt with moveoutbottom
-    hide mc angry with easeoutbottom
-    pause
-    show mc angry at left with easeinleft
-
-    "You run after Scarlet, knowing your only chance to win the tournament is
-    if you can catch up to her before she reaches the dragon orb. You know that
-    you’re faster than her, but she has a huge head start."
-
-    "In desperation, you shout after her."
-
-    MC "SCARLET! Wait!"
-
-    show scarlet angry at right with easeinright
-
-    "Scarlet suddenly drops to her knees. You quickly catch up to her and stop,
-    hovering uncertainly. Something seems wrong. Scarlet holds her side,
-    breathing heavily, and lifts her hand, covered in blood."
-
-    MC "You're injured! How...?"
-
-    "You kneel down beside Scarlet and see a long slash in her shirt, stained
-    red with blood, half-hidden underneath her uniform jacket. You realize she
-    must have gotten it from a fight in the forest and continued into the
-    second arena injured."
-
-    menu:
-        "Why are you trying so hard to win?":
-            s "You wouldn't understand."
-            MC "Not if you don't tell me."
-            "You stand. You can’t waste anymore time here. Leaving Scarlet
-            clutching her wound, you run towards the dais with the dragon orb."
-
-        "Just admit defeat already. You won't make it with that injury.":
-            s "This is nothing."
-            MC "Doesn't look like nothing to me."
-            s "Don’t look down on me. The only reason you’re still here is
-            because of your friend. You would never be able to get here on
-            your own."
-            "You flush and stand quickly."
-            MC "Fine. Then I owe it to Ria to win, don't I?"
-            "You leave Scarlet staring after you as you run towards the raised
-            dais with the dragon orb."
 
     scene bg dragon orb
     show mc surprised at left with easeinleft
 
+    play music "music.mp3"
+
     "You slow down as you reach the front of the dais. You see the dragon orb,
-    floating gently above the dais. It looks bigger than you thought it would.
+    floating gently above the dais."
+
+    "It looks bigger than you thought it would.
     You slowly ascend the dais, and reach out a hand to touch the dragon orb."
 
     "As soon as your fingertips meet the surface of the orb, ripples spread,
@@ -744,23 +802,7 @@ label catch_up_to_scarlet:
     v "Anyway, I am Vienna, a wish-granting dragon. Your prize is one
     wish, any wish, and I will grant it. Go ahead and tell me what you desire."
 
-    menu:
-        "Wish for powers":
-            jump wish_for_powers
-
-        "Wish for healing for Ria":
-            jump wish_for_healing
-
-        "Wish for acceptance":
-            jump wish_for_acceptance
-
-
-    return
-
-label wish_for_powers:
-    hide mc surprised with easeoutbottom
-    pause
-    show mc neutral at left with easeinbottom
+    show mc neutral at left
 
     MC "I want powers. I’ve been powerless my whole life, but I want to be
     normal."
@@ -782,9 +824,7 @@ label wish_for_powers:
     countless times, and suddenly a column of fire, rivaling a dragon’s breath,
     bursts from your palms."
 
-    hide mc neutral with easeoutbottom
-    pause
-    show mc happy at left with easeinbottom
+    show mc happy at left
 
     "You grin, unable to contain your triumph. You jump off of the dais,
     shooting another flare of fire into the sky."
@@ -793,85 +833,31 @@ label wish_for_powers:
 
     return
 
-label wish_for_healing:
-    hide mc surprised with easeoutbottom
-    pause
-    show mc neutral at left with easeinbottom
 
-    MC "I really only won this tournament because of Ria… I couldn’t have
-    gotten here on my own. This wish should be Ria’s."
+label uncertain_ending:
 
-    v "Even if you didn’t win on your own, I can only grant the wish to you,
-    not to your friend."
+    scene bg dragon orb
+    show mc surprised at left with easeinleft
 
-    MC "Then I wish that you would fully heal Ria. She got injured in the
-    tournament because of me."
+    "You slow down as you reach the front of the dais. You see the dragon orb,
+    floating gently above the dais."
 
-    v "Well, I suppose I can hardly refuse, can I?"
+    "It looks bigger than you thought it would.
+    You slowly ascend the dais, and reach out a hand to touch the dragon orb."
 
-    "Vienna closes her eyes briefly, glowing slightly. She opens her eyes as
-    the glow fades."
+    "As soon as your fingertips meet the surface of the orb, ripples spread,
+    and you back away, surprised. You blink, and suddenly the wish-granting
+    dragon floats before you."
 
-    v "It’s done. Your friend is well and whole."
+    show vienna neutral at right
 
-    MC "Thank you."
+    v "Congratulations! You have officially won the Cherry Apple Tournament
+    for… what year is it again? I can’t remember, time passes so differently
+    out here."
+    v "Anyway, I am Vienna, a wish-granting dragon. Your prize is one
+    wish, any wish, and I will grant it. Go ahead and tell me what you desire."
 
-    v "If I could give you some advice... don't be so serious."
-
-    hide vienna neutral
-
-    "With that, Vienna disappears, the dragon orb floating serenely in her
-    place once more. You stare at it, somewhat dazed. Suddenly, the arena
-    echoes with the voice of the tournament host."
-
-    show host neutral at center with moveinbottom
-
-    h "The winner of this year’s Cherry Apple Annual Tournament is… MC!
-    Congratulations! Please find the tournament host to claim your cash prize."
-
-    h "Everyone, please exit the tournament through the same gate you entered.
-    Don’t worry, all magical creatures are currently restrained and will not
-    attack. Any injured students, please exit to the left. If someone around
-    you needs medical assistance immediately, please send up a flare and an
-    assistant will teleport to your side…"
-
-    hide host neutral with moveoutbottom
-
-    "Over the sound of the tournament host’s speech, you hear your name being
-    called by a familiar voice."
-
-    show ria happy at right with moveinright
-
-    r "MC! Are you ok? You won!"
-
-    hide mc neutral with easeoutbottom
-    pause
-    show mc happy at left with easeinbottom
-
-    MC "Ria!"
-
-    r "I can’t believe you won! Now you’ll have bragging rights and the respect
-    of the whole school."
-
-    MC "The respect of the whole school, huh… I don’t deserve it, really.
-    Ria, you know I couldn’t have won without you."
-
-    r "Well, you did promise me the cash part of the prize."
-
-    MC "That's true. So, we're good, right?"
-
-    r "Definitely."
-
-    "You grin at each other as colored flares flash in the sky, as if in
-    celebration of your triumph."
-
-    return
-
-label wish_for_acceptance:
-    hide mc surprised with easeoutbottom
-    pause
-    show mc neutral at left with easeinbottom
-
+    show mc neutral at left
     MC "I was going to wish for powers, since I’ve been powerless my whole
     life. But… I made it this far without them, haven’t I? I’m not sure I want
     them anymore."
@@ -899,7 +885,9 @@ label wish_for_acceptance:
     you quickly make it back to the area where you were sure Ria was left at."
 
     "However, as you scan the field, you realize Ria must have already left by
-    herself or been attended to by a medical assistant. Two freshmen pass by on
+    herself or been attended to by a medical assistant."
+
+    "Two freshmen pass by on
     their way out of the arena, talking excitedly together about the adventure
     they just had."
 
@@ -910,84 +898,28 @@ label wish_for_acceptance:
     return
 
 
-label Help_Ria:
+label sad_ending:
 
-    "The dragon roars and thunders towards you. You take out a throwing knife
-    and aim, then throw it straight for the dragon’s eye. It turns its head at
-    the last moment, and the knife grazes the scales of its head."
-
-    "Enraged, the dragon roars, fire blazing out of its mouth. You drop to the
-    group, avoiding the flames, and then jump back up and throw another knife,
-    which lodges in the dragon’s eye."
-
-    "It roars in pain and turns away."
-
-    r " MC! Go on. I can handle it from here. Go get the dragon’s egg."
-
-    "You hesitate. It would be poor repayment for Ria’s injury to let Scarlet
-    win the tournament prize."
-
-    hide ria hurt with moveoutbottom
-    hide mc angry with easeoutbottom
-    pause
-    show mc angry at left with easeinleft
-
-    "You run after Scarlet, knowing your only chance to win the tournament is
-    if you can catch up to her before she reaches the dragon orb. You know that
-    you’re faster than her, but she has a huge head start."
-
-    "In desperation, you shout after her."
-
-    MC "SCARLET! Wait!"
-
-    show scarlet angry at right with easeinright
-
-    "Scarlet suddenly drops to her knees. You quickly catch up to her and stop,
-    hovering uncertainly. Something seems wrong. Scarlet holds her side,
-    breathing heavily, and lifts her hand, covered in blood."
-
-    MC "You're injured! How...?"
-
-    "You kneel down beside Scarlet and see a long slash in her shirt, stained
-    red with blood, half-hidden underneath her uniform jacket. You realize she
-    must have gotten it from a fight in the forest and continued into the
-    second arena injured."
-
-    menu:
-        "Why are you trying so hard to win?":
-            s "You wouldn't understand."
-            MC "Not if you don't tell me."
-            "You stand. You can’t waste anymore time here. Leaving Scarlet
-            clutching her wound, you run towards the dais with the dragon orb."
-
-        "Just admit defeat already. You won't make it with that injury.":
-            s "This is nothing."
-            MC "Doesn't look like nothing to me."
-            s "Don’t look down on me. The only reason you’re still here is
-            because of your friend. You would never be able to get here on
-            your own."
-            "You flush and stand quickly."
-            MC "Fine. Then I owe it to Ria to win, don't I?"
-            "You leave Scarlet staring after you as you run towards the raised
-            dais with the dragon orb."
 
     scene bg dragon orb
+
     show mc surprised at left with easeinleft
 
     "You slow down as you reach the front of the dais. You see the dragon orb,
-    floating gently above the dais. It looks bigger than you thought it would.
-    You slowly ascend the dais, and reach out a hand to touch the dragon orb."
+    floating gently above the dais. It looks bigger than you thought it would."
+
+    "You slowly ascend the dais, and reach out a hand to touch the dragon orb."
 
     "Ripples spread throughout the orb from where your fingertips touch it.
     Supposedly, the wish-granting dragon should awaken immediately after
-    touching the orb. You hold your breath, waiting for the dragon to appear."
+    touching the orb."
 
-    "Nothing happens. You try tapping the surface of the orb again, but again
+    "You hold your breath, waiting for the dragon to appear.
+    Nothing happens. You try tapping the surface of the orb again, but again
     nothing happens. You stare at it in disbelief and denial."
 
-    hide mc surprised with easeoutbottom
-    pause
-    show mc angry at left with easeinbottom
+
+    show mc angry at left
     show scarlet neutral at right with moveinbottom
 
     s "It won’t work for you."
@@ -999,28 +931,25 @@ label Help_Ria:
     but for some it will refuse to grant wishes. Some say it requires a
     sacrifice, whatever that means."
 
-    hide mc angry with easeoutbottom
-    pause
-    show mc sad at left with easeinbottom
+    show mc sad at left
 
     "You shake your head, unable to accept this turn of events. Scarlet sighs."
 
-    hide scarlet neutral with easeoutbottom
-    pause
-    show scarlet sad at right with easeinbottom
+
+    show scarlet sad at right
 
     s "But what does a stupid wish matter anyway? You won the tournament.
     I lost."
     s "Congratulations."
 
     hide scarlet sad with moveoutbottom
-    hide mc sad with easeoutbottom
-    pause
-    show mc neutral at left with easeinbottom
+    show mc neutral at left
 
     "You stare at Scarlet as she turns and walks away. For possibly the first
     time ever, Scarlet is right. Even if the dragon orb doesn’t work, you don’t
-    need the wish or any powers. You won the tournament without powers, though
+    need the wish or any powers."
+
+    "You won the tournament without powers, though
     admittedly with the help of Ria."
 
     "As if on cue, you hear Ria call your name."
@@ -1031,8 +960,7 @@ label Help_Ria:
 
     "Ria runs towards you, grinning. You smile at her."
 
-    hide mc neutral with easeoutbottom
-    pause
+
     show mc happy at left with easeinbottom
 
     r "I can’t believe it. You even beat Scarlet! She’ll probably be really
@@ -1049,7 +977,9 @@ label Help_Ria:
 
     h "Everyone, please exit the tournament through the same gate you entered.
     Don’t worry, all magical creatures are currently restrained and will not
-    attack. Any injured students, please exit to the left. If someone around
+    attack. Any injured students, please exit to the left."
+
+    "If someone around
     you needs medical assistance immediately, please send up a flare and…"
 
     hide host neutral with moveoutbottom
@@ -1060,7 +990,9 @@ label Help_Ria:
     and bragging rights!"
 
     "You descend the dais and look out at the students, slowly exiting the
-    tournament arena. You spot a few seniors that you recognize shaking their
+    tournament arena."
+
+    "You spot a few seniors that you recognize shaking their
     heads, while a group of underclassmen talk excitedly amongst themselves,
     giddy from their brief adventure."
 
