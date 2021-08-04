@@ -257,8 +257,14 @@ label left_path:
     "Turning around and finding a different path through the forest would be
     worse. You turn to ask Ria her opinion, but to your surprise she is smiling."
 
+    init:
+        transform flip:
+            xzoom -1.0
 
-    show ria grinning at left with moveinleft
+
+    show ria grinning at flip with moveinleft:
+        yalign 0.5
+        linear 0.6 ypos 0.65
 
     r "Don’t worry, MC. I’ll get us through this."
 
@@ -391,8 +397,9 @@ label right_path:
 
     r "Ok. Let’s go."
 
-    "You lead the way, following the less crowded pathway to the right.
-    Already yells of students and the growls of some sort of animal echoes
+    "You lead the way, following the less crowded pathway to the right."
+
+    "Already yells of students and the growls of some sort of animal echoes
     through the forest, and occasional flashes of light from the left from
     students fighting using their powers."
 
@@ -422,15 +429,17 @@ label right_path:
     30 feet along the path."
     show mc neutral at center:
         xalign 0.5
-        linear 0.6 xpos 0.29
+        linear 0.6 xpos 0.38
 
 
     show monster grp at right with moveinright:
         yalign 0.5
-        linear 0.6 ypos 0.5
+        linear 0.6 ypos 0.58
 
     "You recognize them from your Dangerous Magical Creatures textbook
-    by their forked tongue and the mushrooms growing on the back. You remember
+    by their forked tongue and the mushrooms growing on the back."
+
+    "You remember
     that forest monsters can be extremely aggressive and dangerous when they
     spot a possible threat."
 
@@ -522,7 +531,9 @@ label second_track:
 
     "Suddenly, loud bangs and flashes of colored light explode in the sky over
     the left side of the forest, indicating the start of a fight between
-    students. The giant forest monsters look up at the noise, and you freeze
+    students."
+
+    "The giant forest monsters look up at the noise, and you freeze
     in place. The monsters begin to move towards the left, attracted by the
     noise and light."
 
@@ -539,6 +550,8 @@ label second_track:
     the sudden lack of trees surrounding me. Ria gasps, and you turn to face the
     second arena."
 
+    stop music fadeout 1.0
+
     jump second_arena
 
     return
@@ -547,7 +560,14 @@ label second_arena:
 
     scene bg arena with dissolve
 
-    show ria surprised at left
+    init:
+        transform flip:
+            xzoom -1.0
+
+    show ria surprised at flip with moveinleft:
+        yalign 0.5
+        linear 0.6 ypos 0.65
+
     show mc surprised at right
 
     "The end of the forest opens onto a wide, flat Gladiator-like arena the
@@ -558,7 +578,9 @@ label second_arena:
 
     MC "A dragon is the obstacle this year? I really can’t believe it…"
 
-    show ria sad at left
+    show ria sad at flip:
+        yalign 0.5
+        linear 0.6 ypos 0.65
 
 
     r "Is this even legal? How is anyone supposed to get past the dragon?"
@@ -614,7 +636,7 @@ label second_arena:
 
     show dragon angry at right with easeinright:
         yalign 0.5
-        linear 0.6 ypos 0.65
+        linear 0.6 ypos 0.5
 
     "You freeze in indecision. On one hand, you don’t want to fight either the
     dragon or Scarlet, and you don’t want to throw away your plan with Ria."
@@ -632,7 +654,10 @@ label second_arena:
             xzoom -1.0
 
 
-    show mc child at flip with moveinbottom
+    show mc child at flip with moveinbottom:
+        yalign 0.5
+        linear 0.6 ypos 0.65
+
     show scarlet child at right with moveinbottom
 
     s "MC! Let’s play ‘Defeat the Dragon’ together today!"
@@ -645,7 +670,9 @@ label second_arena:
 
     scene bg arena with fade
 
-    show scarlet angry at left with easeinleft
+    show scarlet angry at flip with easeinleft:
+        yalign 0.5
+        linear 0.6 ypos 0.65
     show dragon angry at right with easeinright:
         yalign 0.5
         linear 0.6 ypos 0.56
@@ -737,6 +764,8 @@ label second_arena:
     hide scarlet grinning at left
 
     r "MC, leave me, I’ll be fine. Go catch up to Scarlet. You have to get the orb first."
+
+
 
     if count >= 3:
         jump happy_ending
