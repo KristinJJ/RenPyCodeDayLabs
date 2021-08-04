@@ -510,15 +510,24 @@ label first_track:
 
     hide monster blue with moveoutbottom
 
-    show ria tired at left with moveinleft
+    init:
+        transform flip:
+            xzoom -1.0
 
+    show ria tired at flip with moveinleft:
+        yalign 0.5
+        linear 0.6 ypos 0.65
 
 
     "Ria suddenly bursts out of the forest, running at full speed.
     She looks slightly worse for wear; her shield has already disappeared,
     and her uniform sleeve has a long tear in it."
 
-    show mc happy at center
+
+
+    show mc happy at flip:
+        yalign 0.5
+        linear 0.6 ypos 0.65
 
     MC "We made it! We’re in the second arena!"
 
@@ -567,7 +576,7 @@ label second_arena:
 
     scene bg arena with dissolve
 
-    play music "second_arena.mp3" volume 0.45
+    play music "second_arena.mp3" volume 0.25
 
     init:
         transform flip:
@@ -639,7 +648,15 @@ label second_arena:
 
     hide ria neutral with moveoutbottom
 
-    show scarlet angry at left with easeinleft
+    init:
+        transform flip:
+            xzoom -1.0
+
+
+    show scarlet angry at flip with easeinleft:
+        yalign 0.5
+        linear 0.6 ypos 0.65
+
 
     hide mc surprised with moveoutright
 
@@ -655,6 +672,8 @@ label second_arena:
 
     "Watching her fight the dragon, you are suddenly remember when Scarlet
     used to be your closest friend."
+
+
 
     scene bg flashback1 with fade
 
@@ -685,9 +704,12 @@ label second_arena:
     show dragon angry at right with easeinright:
         yalign 0.5
         linear 0.6 ypos 0.56
-    show mc angry at center with easeinbottom:
+    show mc angry at flip with moveinbottom:
         xalign 0.5
         linear 0.6 xpos 0.39
+        yalign 0.5
+        linear 0.6 ypos 0.65
+
 
 
     "Suddenly, you find yourself running full speed towards Scarlet.
@@ -1049,7 +1071,7 @@ label sad_ending:
     return
 
 label credits:
-    scene bg credits with fade
+    scene bg credits1 with fade
     play music "title_and_credits_music.mp3" volume 0.5
     pause 10
 
